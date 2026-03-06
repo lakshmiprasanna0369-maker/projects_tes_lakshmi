@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        stage('Clone GitHub Repo') {
+        stage('Clone Repo') {
             steps {
                 git branch: 'main', url: 'https://github.com/lakshmiprasanna0369-maker/projects_tes_lakshmi.git'
             }
@@ -18,6 +18,18 @@ pipeline {
         stage('Create Artifact') {
             steps {
                 sh 'tar -cvf tes-artifact.tar *'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t tes-image .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh 'docker run -d -p 3824:80 tes-image'
             }
         }
 
