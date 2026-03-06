@@ -28,10 +28,14 @@ pipeline {
         }
 
         stage('Run Container') {
-            steps {
-                sh 'docker run -d -p 3824:80 tes-image'
-            }
-        }
+    steps {
+        sh '''
+        docker stop $(docker ps -q) || true
+        docker rm $(docker ps -aq) || true
+        docker run -d -p 3824:80 tes-image
+        '''
+    }
+}
 
     }
 }
