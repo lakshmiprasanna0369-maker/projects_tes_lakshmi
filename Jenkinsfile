@@ -32,7 +32,7 @@ pipeline {
         sh '''
         docker stop $(docker ps -q) || true
         docker rm $(docker ps -aq) || true
-        docker run -d -p 3824:80 tes-image
+        docker run -d --restart always -p 3822:80 tes-image
         '''
     }
 }
